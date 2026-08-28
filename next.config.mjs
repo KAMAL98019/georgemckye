@@ -8,6 +8,10 @@ const nextConfig = {
       // body needs more headroom than Next's 1mb default.
       bodySizeLimit: "20mb",
     },
+    // Static generation forks one Prisma connection pool per build worker;
+    // shared hosting's low MySQL connection cap gets exceeded with the
+    // default worker count, so keep generation serial.
+    cpus: 1,
   },
 };
 
