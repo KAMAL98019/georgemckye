@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  // Prisma's query engine binary and sharp's native binary are loaded via
+  // dynamic paths that Next's file tracer can miss — force-include them so
+  // the standalone bundle actually has them at runtime.
+  outputFileTracingIncludes: {
+    "/*": ["./node_modules/.prisma/client/**/*", "./node_modules/sharp/**/*"],
+  },
   webpack: (config) => {
     // jose's Edge Runtime bundle includes JWE (encrypted-JWT) compression
     // support that this app never exercises (middleware only signs/verifies
