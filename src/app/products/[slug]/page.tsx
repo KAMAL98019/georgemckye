@@ -15,10 +15,13 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://georgemckye.shop";
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = await prisma.product.findUnique({
     where: { slug: params.slug },
-    include: { images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 } },
+    include: {
+      images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 },
+      category: true,
+    },
   });
 
-  if (!product || !product.isPublished) {
+  if (!product || !product.isPublished || !product.category?.isActive) {
     return { title: "Product Not Found" };
   }
 
@@ -46,7 +49,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     }
   });
 
-  if (!product || !product.isPublished) {
+  if (!product || !product.isPublished || !product.category?.isActive) {
     notFound();
   }
 

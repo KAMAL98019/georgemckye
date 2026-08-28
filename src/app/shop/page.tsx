@@ -43,7 +43,10 @@ export default async function ShopPage({
   let products: Prisma.ProductGetPayload<{ include: { images: true; category: true } }>[] = [];
 
   try {
-    const whereClause: Prisma.ProductWhereInput = { isPublished: true };
+    const whereClause: Prisma.ProductWhereInput = {
+      isPublished: true,
+      category: { isActive: true },
+    };
     if (colorFilter) {
       whereClause.color = colorFilter;
     }
@@ -75,7 +78,7 @@ export default async function ShopPage({
   let availableColors: string[] = [];
   try {
     const productsWithColors = await prisma.product.findMany({
-      where: { isPublished: true, color: { not: null } },
+      where: { isPublished: true, color: { not: null }, category: { isActive: true } },
       select: { color: true },
       distinct: ["color"],
     });

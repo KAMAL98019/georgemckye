@@ -11,6 +11,7 @@ async function getFeaturedProducts() {
       where: {
         isFeatured: true,
         isPublished: true,
+        category: { isActive: true },
       },
       include: {
         images: {
