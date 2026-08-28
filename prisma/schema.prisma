@@ -19,6 +19,8 @@ model User {
   
   addresses Address[]
   orders    Order[]
+
+  @@map("user")
 }
 
 enum Role {
@@ -41,6 +43,8 @@ model Address {
   isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("address")
 }
 
 model Category {
@@ -54,6 +58,8 @@ model Category {
   updatedAt   DateTime  @updatedAt
   
   products    Product[]
+
+  @@map("category")
 }
 
 model Product {
@@ -91,6 +97,7 @@ model Product {
   @@index([isFeatured])
   @@index([isPublished])
   @@index([categoryId])
+  @@map("product")
 }
 
 model ProductImage {
@@ -101,6 +108,8 @@ model ProductImage {
   isPrimary Boolean  @default(false)
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
+
+  @@map("productimage")
 }
 
 model Order {
@@ -134,6 +143,7 @@ model Order {
   @@index([status])
   @@index([customerPhone])
   @@index([createdAt])
+  @@map("order")
 }
 
 enum OrderSource {
@@ -170,6 +180,8 @@ model OrderItem {
   sku         String
   price       Decimal  @db.Decimal(10, 2)
   quantity    Int
+
+  @@map("orderitem")
 }
 
 model Testimonial {
@@ -180,6 +192,8 @@ model Testimonial {
   isPublished Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("testimonial")
 }
 
 model SiteSetting {
@@ -188,6 +202,8 @@ model SiteSetting {
   value       String   @db.Text
   description String?
   updatedAt   DateTime @updatedAt
+
+  @@map("sitesetting")
 }
 
 model ContactEnquiry {
@@ -201,6 +217,7 @@ model ContactEnquiry {
 
   @@index([status])
   @@index([createdAt])
+  @@map("contactenquiry")
 }
 
 enum EnquiryStatus {
