@@ -4,6 +4,10 @@ import FadeIn from "@/components/ui/FadeIn";
 import { Leaf, Droplets, ShieldCheck, Wind } from "lucide-react";
 import type { Metadata } from "next";
 
+// Renders Footer (categories) at request time instead of freezing whatever
+// state the DB was in during the build's static-generation step.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Why Bamboo",
   description: "Discover why bamboo fabric makes soft, absorbent, sustainable everyday essentials.",

@@ -3,6 +3,10 @@ import Footer from "@/components/layout/Footer";
 import FadeIn from "@/components/ui/FadeIn";
 import type { Metadata } from "next";
 
+// Renders Footer (categories) at request time instead of freezing whatever
+// state the DB was in during the build's static-generation step.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "About Us",
   description: "The George McKye story — premium, natural everyday essentials crafted with care and quality.",

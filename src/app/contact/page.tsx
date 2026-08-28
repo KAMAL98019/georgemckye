@@ -9,6 +9,10 @@ import StoreMap from "@/components/ui/StoreMap";
 import { STORE_ADDRESS, STORE_MAP_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 
+// Renders Footer (categories) at request time instead of freezing whatever
+// state the DB was in during the build's static-generation step.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Contact Us",
   description: "Get in touch with George McKye for order enquiries, product questions, and support.",

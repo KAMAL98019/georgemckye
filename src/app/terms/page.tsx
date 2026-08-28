@@ -1,6 +1,10 @@
 import InfoPage from "@/components/ui/InfoPage";
 import type { Metadata } from "next";
 
+// Renders Footer (categories) at request time instead of freezing whatever
+// state the DB was in during the build's static-generation step.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms and conditions for using the George McKye website.",

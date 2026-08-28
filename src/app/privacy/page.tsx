@@ -2,6 +2,10 @@ import InfoPage from "@/components/ui/InfoPage";
 import { getSiteSettings } from "@/lib/settings";
 import type { Metadata } from "next";
 
+// Renders Footer (categories) at request time instead of freezing whatever
+// state the DB was in during the build's static-generation step.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How George McKye collects, uses, and protects your information.",
