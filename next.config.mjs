@@ -8,14 +8,6 @@ const nextConfig = {
     outputFileTracingIncludes: {
       "/*": ["./node_modules/.prisma/client/**/*", "./node_modules/sharp/**/*"],
     },
-    // Limit to 1 CPU during build to prevent MySQL connection exhaustion on shared hosting
-    cpus: 1,
-    workerThreads: false,
-    // Disable client-side Router Cache for dynamic pages (like your admin/shop pages)
-    // so that clicking links always fetches fresh data instead of using stale cache.
-    staleTimes: {
-      dynamic: 0,
-    },
   },
   webpack: (config) => {
     // jose's Edge Runtime bundle includes JWE (encrypted-JWT) compression
