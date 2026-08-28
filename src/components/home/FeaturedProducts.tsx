@@ -4,24 +4,27 @@ import prisma from "@/lib/prisma";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
 import FadeIn from "@/components/ui/FadeIn";
 import { parseCsvOptions } from "@/lib/variants";
+import { withRetry } from "@/lib/withRetry";
 
 async function getFeaturedProducts() {
   try {
-    const products = await prisma.product.findMany({
-      where: {
-        isFeatured: true,
-        isPublished: true,
-        category: { isActive: true },
-      },
-      include: {
-        images: {
-          orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }],
-          take: 1,
+    const products = await withRetry(() =>
+      prisma.product.findMany({
+        where: {
+          isFeatured: true,
+          isPublished: true,
+          category: { isActive: true },
         },
-        category: true,
-      },
-      take: 4,
-    });
+        include: {
+          images: {
+            orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }],
+            take: 1,
+          },
+          category: true,
+        },
+        take: 4,
+      })
+    );
     return products;
   } catch (error) {
     console.error("Failed to fetch featured products:", error);

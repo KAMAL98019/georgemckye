@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { withRetry } from "@/lib/withRetry";
 
 export type SiteSettings = {
   whatsappNumber: string;
@@ -30,7 +31,7 @@ const KEY_MAP: Record<keyof SiteSettings, string> = {
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   try {
-    const rows = await prisma.siteSetting.findMany();
+    const rows = await withRetry(() => prisma.siteSetting.findMany());
     const map = new Map(rows.map((row) => [row.key, row.value]));
 
     const settings = { ...DEFAULT_SETTINGS };

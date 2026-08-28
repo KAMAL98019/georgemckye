@@ -8,6 +8,7 @@ import AddToCartButtons from "@/components/ui/AddToCartButtons";
 import { parseCsvOptions } from "@/lib/variants";
 import type { Prisma } from "@prisma/client";
 import type { Metadata } from "next";
+import { withRetry } from "@/lib/withRetry";
 
 // Force dynamic because we are querying DB based on searchParams
 export const dynamic = "force-dynamic";
@@ -57,14 +58,16 @@ export default async function ShopPage({
       whereClause.name = { contains: searchQuery };
     }
 
-    products = await prisma.product.findMany({
-      where: whereClause,
-      include: {
-        images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 },
-        category: true,
-      },
-      orderBy: { createdAt: 'desc' }
-    });
+    products = await withRetry(() =>
+      prisma.product.findMany({
+        where: whereClause,
+        include: {
+          images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 },
+          category: true,
+        },
+        orderBy: { createdAt: 'desc' }
+      })
+    );
 
     // Only mix categories together when browsing everything — a specific
     // category filter should keep its natural (newest-first) order.
@@ -77,11 +80,13 @@ export default async function ShopPage({
 
   let availableColors: string[] = [];
   try {
-    const productsWithColors = await prisma.product.findMany({
-      where: { isPublished: true, color: { not: null }, category: { isActive: true } },
-      select: { color: true },
-      distinct: ["color"],
-    });
+    const productsWithColors = await withRetry(() =>
+      prisma.product.findMany({
+        where: { isPublished: true, color: { not: null }, category: { isActive: true } },
+        select: { color: true },
+        distinct: ["color"],
+      })
+    );
     availableColors = productsWithColors
       .map((p) => p.color)
       .filter((color): color is string => typeof color === "string" && color.trim().length > 0);
@@ -91,11 +96,13 @@ export default async function ShopPage({
 
   let categories: { name: string; slug: string }[] = [];
   try {
-    categories = await prisma.category.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-      select: { name: true, slug: true },
-    });
+    categories = await withRetry(() =>
+      prisma.category.findMany({
+        where: { isActive: true },
+        orderBy: { sortOrder: "asc" },
+        select: { name: true, slug: true },
+      })
+    );
   } catch (err) {
     console.error("Failed to fetch categories:", err);
   }

@@ -5,14 +5,17 @@ import { getSiteSettings } from "@/lib/settings";
 import { STORE_ADDRESS, STORE_PHONE, LOGO_URL } from "@/lib/constants";
 import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
 import type { Category } from "@prisma/client";
+import { withRetry } from "@/lib/withRetry";
 
 export default async function Footer() {
   let categories: Category[] = [];
   try {
-    categories = await prisma.category.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: 'asc' },
-    });
+    categories = await withRetry(() =>
+      prisma.category.findMany({
+        where: { isActive: true },
+        orderBy: { sortOrder: 'asc' },
+      })
+    );
   } catch (error) {
     console.error("Failed to load footer categories", error);
   }

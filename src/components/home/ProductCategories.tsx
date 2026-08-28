@@ -3,6 +3,7 @@ import Link from "next/link";
 import prisma from "@/lib/prisma";
 import FadeIn from "@/components/ui/FadeIn";
 import { ArrowRight } from "lucide-react";
+import { withRetry } from "@/lib/withRetry";
 
 const CATEGORY_COPY: Record<string, string> = {
   towels: "Soft, absorbent essentials designed for everyday comfort.",
@@ -12,17 +13,19 @@ const CATEGORY_COPY: Record<string, string> = {
 
 async function getCategoriesWithImage() {
   try {
-    const categories = await prisma.category.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-      include: {
-        products: {
-          where: { isPublished: true },
-          include: { images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 } },
-          take: 1,
+    const categories = await withRetry(() =>
+      prisma.category.findMany({
+        where: { isActive: true },
+        orderBy: { sortOrder: "asc" },
+        include: {
+          products: {
+            where: { isPublished: true },
+            include: { images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 } },
+            take: 1,
+          },
         },
-      },
-    });
+      })
+    );
     return categories;
   } catch (error) {
     console.error("Failed to load categories for homepage:", error);
