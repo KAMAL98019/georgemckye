@@ -1,3 +1,4 @@
+import { cache } from "react";
 import prisma from "@/lib/prisma";
 import { withRetry } from "@/lib/withRetry";
 
@@ -29,7 +30,7 @@ const KEY_MAP: Record<keyof SiteSettings, string> = {
   seoDescription: "seo_description",
 };
 
-export async function getSiteSettings(): Promise<SiteSettings> {
+export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   try {
     const rows = await withRetry(() => prisma.siteSetting.findMany());
     const map = new Map(rows.map((row) => [row.key, row.value]));
@@ -47,7 +48,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     console.error("Failed to load site settings, using defaults:", error);
     return DEFAULT_SETTINGS;
   }
-}
+});
 
 export async function updateSiteSettings(
   values: Partial<Record<keyof SiteSettings, string>>
