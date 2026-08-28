@@ -15,6 +15,12 @@ import StoreMap from "@/components/ui/StoreMap";
 import FadeIn from "@/components/ui/FadeIn";
 import { STORE_ADDRESS, STORE_MAP_URL } from "@/lib/constants";
 
+// Otherwise this page is statically prerendered once at build time — if the
+// DB is briefly unreachable during that build step, the empty/fallback
+// result gets frozen into the page and served to everyone until the next
+// rebuild, instead of just being a transient blip.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const settings = await getSiteSettings();
   const whatsappUrl = buildWhatsAppUrl(
