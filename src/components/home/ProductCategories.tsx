@@ -18,7 +18,7 @@ async function getCategoriesWithImage() {
       include: {
         products: {
           where: { isPublished: true },
-          include: { images: { orderBy: { sortOrder: "asc" }, take: 1 } },
+          include: { images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 } },
           take: 1,
         },
       },

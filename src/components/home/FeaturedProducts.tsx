@@ -14,7 +14,7 @@ async function getFeaturedProducts() {
       },
       include: {
         images: {
-          orderBy: { sortOrder: 'asc' },
+          orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }],
           take: 1,
         },
         category: true,

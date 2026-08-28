@@ -1,9 +1,9 @@
 import prisma from "@/lib/prisma";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
+import ProductGallery from "@/components/ui/ProductGallery";
 import { parseCsvOptions } from "@/lib/variants";
 import { CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
@@ -15,7 +15,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://georgemckye.shop";
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = await prisma.product.findUnique({
     where: { slug: params.slug },
-    include: { images: { orderBy: { sortOrder: "asc" }, take: 1 } },
+    include: { images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }], take: 1 } },
   });
 
   if (!product || !product.isPublished) {
@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
   const product = await prisma.product.findUnique({
     where: { slug: params.slug },
     include: {
-      images: { orderBy: { sortOrder: 'asc' } },
+      images: { orderBy: [{ isPrimary: 'desc' }, { sortOrder: 'asc' }] },
       category: true,
     }
   });
@@ -79,40 +79,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
       <main className="flex-grow container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
           
-          {/* Image Gallery */}
-          <div className="space-y-4">
-            <div className="relative aspect-[4/5] md:aspect-square bg-white rounded-xl overflow-hidden border border-brand-muted/20">
-              {product.images.length > 0 ? (
-                <Image
-                  src={product.images[0].url}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-brand-muted bg-brand-cream/30">
-                  No Image Available
-                </div>
-              )}
-            </div>
-            
-            {/* Thumbnails (Mocked since we only allow 1 upload currently, but UI is ready) */}
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
-                {product.images.map((img) => (
-                  <div key={img.id} className="relative aspect-square rounded-md overflow-hidden border border-brand-muted/20 cursor-pointer hover:border-brand-primary transition-colors">
-                    <Image
-                      src={img.url}
-                      alt={product.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Image Gallery — hover to zoom, click to open a full preview */}
+          <ProductGallery images={product.images} productName={product.name} />
 
           {/* Product Info */}
           <div className="flex flex-col">
@@ -156,6 +124,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
                 }}
                 sizeOptions={parseCsvOptions(product.sizeOptions)}
                 genderOptions={parseCsvOptions(product.genderOptions)}
+                showQuantity
               />
               <p className="text-xs text-brand-deep/50 mt-3 text-center">
                 Fast, simple checkout via WhatsApp. Pay after confirmation.

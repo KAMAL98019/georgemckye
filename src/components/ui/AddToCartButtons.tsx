@@ -3,29 +3,40 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag, MessageCircle } from "lucide-react";
+import { ShoppingBag, MessageCircle, Minus, Plus } from "lucide-react";
 import WhatsAppCheckoutModal from "@/components/cart/WhatsAppCheckoutModal";
+
+const MAX_QUANTITY = 20;
 
 export default function AddToCartButtons({
   product,
   sizeOptions = [],
   genderOptions = [],
+  showQuantity = false,
 }: {
   product: { id: string; name: string; price: number; sku: string; image?: string };
   sizeOptions?: string[];
   genderOptions?: string[];
+  showQuantity?: boolean;
 }) {
   const { addToCart } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined);
-  const [selectedGender, setSelectedGender] = useState<string | undefined>(undefined);
+  const [quantity, setQuantity] = useState(1);
+  // Auto-select when there's only one option (e.g. "Free Size") — nothing to actually choose,
+  // so it shouldn't block the customer with a required-selection prompt.
+  const [selectedSize, setSelectedSize] = useState<string | undefined>(
+    sizeOptions.length === 1 ? sizeOptions[0] : undefined
+  );
+  const [selectedGender, setSelectedGender] = useState<string | undefined>(
+    genderOptions.length === 1 ? genderOptions[0] : undefined
+  );
 
   const validateSelection = (): boolean => {
-    if (sizeOptions.length > 0 && !selectedSize) {
+    if (sizeOptions.length > 1 && !selectedSize) {
       toast.error("Please select a size");
       return false;
     }
-    if (genderOptions.length > 0 && !selectedGender) {
+    if (genderOptions.length > 1 && !selectedGender) {
       toast.error("Please select Men / Women");
       return false;
     }
@@ -36,7 +47,7 @@ export default function AddToCartButtons({
     id: product.id,
     name: product.name,
     price: product.price,
-    quantity: 1,
+    quantity,
     sku: product.sku,
     image: product.image,
     size: selectedSize,
@@ -97,6 +108,33 @@ export default function AddToCartButtons({
                 {option}
               </button>
             ))}
+          </div>
+        </div>
+      )}
+
+      {showQuantity && (
+        <div className="mb-3">
+          <p className="text-xs font-bold text-brand-deep/70 uppercase tracking-wide mb-1.5">Quantity</p>
+          <div className="flex items-center border border-brand-muted/40 rounded-md overflow-hidden w-fit">
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+              disabled={quantity <= 1}
+              className="px-3 py-1.5 bg-gray-50 hover:bg-gray-100 text-brand-deep transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Decrease quantity"
+            >
+              <Minus size={14} />
+            </button>
+            <span className="px-4 py-1.5 text-sm font-bold w-12 text-center">{quantity}</span>
+            <button
+              type="button"
+              onClick={() => setQuantity((q) => Math.min(MAX_QUANTITY, q + 1))}
+              disabled={quantity >= MAX_QUANTITY}
+              className="px-3 py-1.5 bg-gray-50 hover:bg-gray-100 text-brand-deep transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Increase quantity"
+            >
+              <Plus size={14} />
+            </button>
           </div>
         </div>
       )}
