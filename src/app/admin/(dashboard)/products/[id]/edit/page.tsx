@@ -27,6 +27,8 @@ export default async function EditProductPage({ params }: { params: { id: string
     color: product.color || "",
     material: product.material || "",
     size: product.size || "",
+    sizeOptions: product.sizeOptions || "",
+    genderOptions: product.genderOptions || "",
     sku: product.sku,
     description: product.description || "",
     careInstructions: product.careInstructions || "",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import prisma from "@/lib/prisma";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
 import FadeIn from "@/components/ui/FadeIn";
+import { parseCsvOptions } from "@/lib/variants";
 
 async function getFeaturedProducts() {
   try {
@@ -104,14 +105,16 @@ export default async function FeaturedProducts() {
                   )}
                 </div>
 
-                <AddToCartButtons 
+                <AddToCartButtons
                   product={{
                     id: product.id,
                     name: product.name,
                     price: Number(product.price),
                     sku: product.sku,
                     image: product.images.length > 0 ? product.images[0].url : undefined
-                  }} 
+                  }}
+                  sizeOptions={parseCsvOptions(product.sizeOptions)}
+                  genderOptions={parseCsvOptions(product.genderOptions)} 
                 />
               </div>
             </FadeIn>

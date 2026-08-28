@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
+import { parseCsvOptions } from "@/lib/variants";
 import { CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -145,14 +146,16 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
             {/* Action Buttons */}
             <div className="mb-12">
-              <AddToCartButtons 
+              <AddToCartButtons
                 product={{
                   id: product.id,
                   name: product.name,
                   price: Number(product.price),
                   sku: product.sku,
                   image: product.images.length > 0 ? product.images[0].url : undefined
-                }} 
+                }}
+                sizeOptions={parseCsvOptions(product.sizeOptions)}
+                genderOptions={parseCsvOptions(product.genderOptions)}
               />
               <p className="text-xs text-brand-deep/50 mt-3 text-center">
                 Fast, simple checkout via WhatsApp. Pay after confirmation.

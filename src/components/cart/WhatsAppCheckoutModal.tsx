@@ -46,7 +46,7 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boo
         state: formData.state,
         pincode: formData.pincode,
         note: formData.note,
-        items: items.map((item) => ({ id: item.id, quantity: item.quantity })),
+        items: items.map((item) => ({ id: item.id, quantity: item.quantity, size: item.size, gender: item.gender })),
       });
       if (result.success) {
         orderNumber = result.orderNumber;
@@ -61,7 +61,10 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boo
     }
     message += `*PRODUCTS*\n-------------------------\n`;
     items.forEach((item) => {
-      message += `${item.name}\nSKU: ${item.sku}\nQuantity: ${item.quantity}\nPrice: ₹${item.price * item.quantity}\n\n`;
+      message += `${item.name}\nSKU: ${item.sku}\n`;
+      if (item.size) message += `Size: ${item.size}\n`;
+      if (item.gender) message += `Men/Women: ${item.gender}\n`;
+      message += `Quantity: ${item.quantity}\nPrice: ₹${item.price * item.quantity}\n\n`;
     });
 
     message += `*Estimated Total: ₹${cartTotal}*\n\n`;
@@ -141,8 +144,13 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boo
             <h3 className="text-sm font-bold text-gray-700 mb-2">Order Summary</h3>
             <div className="max-h-32 overflow-y-auto space-y-2 mb-4">
               {items.map(item => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span className="text-gray-600">{item.quantity}x {item.name}</span>
+                <div key={`${item.id}-${item.size || ""}-${item.gender || ""}`} className="flex justify-between text-sm">
+                  <span className="text-gray-600">
+                    {item.quantity}x {item.name}
+                    {(item.size || item.gender) && (
+                      <span className="text-gray-400"> ({[item.size, item.gender].filter(Boolean).join(", ")})</span>
+                    )}
+                  </span>
                   <span className="font-medium">₹{item.price * item.quantity}</span>
                 </div>
               ))}

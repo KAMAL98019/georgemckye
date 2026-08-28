@@ -33,8 +33,11 @@ export default function CartPageContent() {
               </div>
 
               <div className="divide-y divide-brand-muted/20">
-                {items.map((item) => (
-                  <div key={item.id} className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                {items.map((item) => {
+                  const variant = { size: item.size, gender: item.gender };
+                  const lineKey = `${item.id}-${item.size || ""}-${item.gender || ""}`;
+                  return (
+                  <div key={lineKey} className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                     <div className="col-span-1 md:col-span-6 flex gap-4">
                       {/* Image placeholder since we might not have it in cart context */}
                       <div className="w-20 h-24 bg-brand-cream/30 rounded flex-shrink-0 flex items-center justify-center text-xs text-brand-muted">
@@ -43,6 +46,11 @@ export default function CartPageContent() {
                       <div>
                         <h3 className="text-lg font-bold text-brand-deep mb-1">{item.name}</h3>
                         <p className="text-sm text-brand-deep/60 mb-2">SKU: {item.sku}</p>
+                        {(item.size || item.gender) && (
+                          <p className="text-sm text-brand-deep/60 mb-2">
+                            {[item.size, item.gender].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
                         <p className="font-medium text-brand-primary">₹{item.price}</p>
                       </div>
                     </div>
@@ -50,14 +58,14 @@ export default function CartPageContent() {
                     <div className="col-span-1 md:col-span-3 flex justify-center">
                       <div className="flex items-center border border-brand-muted/30 rounded-md overflow-hidden w-fit">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item.id, item.quantity - 1, variant)}
                           className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
                         >
                           <Minus size={14} />
                         </button>
                         <span className="px-4 py-2 text-sm font-bold w-12 text-center">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item.id, item.quantity + 1, variant)}
                           className="px-3 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors"
                         >
                           <Plus size={14} />
@@ -72,14 +80,15 @@ export default function CartPageContent() {
 
                     <div className="col-span-1 md:col-span-1 text-right">
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id, variant)}
                         className="text-red-400 hover:text-red-600 p-2 transition-colors inline-flex"
                       >
                         <Trash2 size={20} />
                       </button>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 

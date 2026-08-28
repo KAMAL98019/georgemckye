@@ -70,6 +70,10 @@ model Product {
   color           String?
   material        String?
   size            String?
+  // Comma-separated selectable options shown as dropdowns on the product page
+  // (e.g. "S,M,L,XL" / "Men,Women"). Leave blank to hide that selector.
+  sizeOptions     String?
+  genderOptions   String?
   careInstructions String?        @db.Text
   features        String?        @db.Text
   seoTitle        String?

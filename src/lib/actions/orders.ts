@@ -6,6 +6,8 @@ import { z } from "zod";
 const orderItemSchema = z.object({
   id: z.string().min(1),
   quantity: z.number().int().min(1).max(999),
+  size: z.string().trim().max(50).optional(),
+  gender: z.string().trim().max(50).optional(),
 });
 
 const createOrderSchema = z.object({
@@ -60,9 +62,10 @@ export async function createWhatsAppOrder(
       .map((item) => {
         const product = productMap.get(item.id);
         if (!product) return null;
+        const variantLabel = [item.size, item.gender].filter(Boolean).join(", ");
         return {
           productId: product.id,
-          productName: product.name,
+          productName: variantLabel ? `${product.name} (${variantLabel})` : product.name,
           sku: product.sku,
           price: product.salePrice ?? product.price,
           quantity: item.quantity,

@@ -9,13 +9,21 @@ export type CartItem = {
   quantity: number;
   image?: string;
   sku: string;
+  size?: string;
+  gender?: string;
 };
+
+type Variant = { size?: string; gender?: string };
+
+function lineKey(id: string, variant?: Variant): string {
+  return `${id}::${variant?.size || ""}::${variant?.gender || ""}`;
+}
 
 type CartContextType = {
   items: CartItem[];
   addToCart: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  removeFromCart: (id: string, variant?: Variant) => void;
+  updateQuantity: (id: string, quantity: number, variant?: Variant) => void;
   clearCart: () => void;
   cartTotal: number;
   cartCount: number;
@@ -47,24 +55,27 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addToCart = (item: CartItem) => {
     setItems(prev => {
-      const existing = prev.find(i => i.id === item.id);
+      const key = lineKey(item.id, item);
+      const existing = prev.find(i => lineKey(i.id, i) === key);
       if (existing) {
-        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i);
+        return prev.map(i => lineKey(i.id, i) === key ? { ...i, quantity: i.quantity + item.quantity } : i);
       }
       return [...prev, item];
     });
   };
 
-  const removeFromCart = (id: string) => {
-    setItems(prev => prev.filter(i => i.id !== id));
+  const removeFromCart = (id: string, variant?: Variant) => {
+    const key = lineKey(id, variant);
+    setItems(prev => prev.filter(i => lineKey(i.id, i) !== key));
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number, variant?: Variant) => {
     if (quantity <= 0) {
-      removeFromCart(id);
+      removeFromCart(id, variant);
       return;
     }
-    setItems(prev => prev.map(i => i.id === id ? { ...i, quantity } : i));
+    const key = lineKey(id, variant);
+    setItems(prev => prev.map(i => lineKey(i.id, i) === key ? { ...i, quantity } : i));
   };
 
   const clearCart = () => setItems([]);

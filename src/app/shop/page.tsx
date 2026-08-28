@@ -5,6 +5,7 @@ import { Filter } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
+import { parseCsvOptions } from "@/lib/variants";
 import type { Prisma } from "@prisma/client";
 import type { Metadata } from "next";
 
@@ -213,14 +214,16 @@ export default async function ShopPage({
                   )}
                       </div>
 
-                      <AddToCartButtons 
+                      <AddToCartButtons
                         product={{
                           id: product.id,
                           name: product.name,
                           price: Number(product.price),
                           sku: product.sku,
                           image: product.images.length > 0 ? product.images[0].url : undefined
-                        }} 
+                        }}
+                        sizeOptions={parseCsvOptions(product.sizeOptions)}
+                        genderOptions={parseCsvOptions(product.genderOptions)}
                       />
                     </div>
                   </div>

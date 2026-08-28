@@ -5,6 +5,9 @@ import { Upload, Save, X } from "lucide-react";
 
 type Category = { id: string; name: string };
 
+const SIZE_OPTION_CHOICES = ["Free Size", "S", "M", "L", "XL", "XXL", "XXXL"];
+const GENDER_OPTION_CHOICES = ["Men", "Women", "Unisex"];
+
 export type ProductFormValues = {
   name: string;
   categoryId: string;
@@ -13,6 +16,8 @@ export type ProductFormValues = {
   color: string;
   material: string;
   size: string;
+  sizeOptions: string;
+  genderOptions: string;
   sku: string;
   description: string;
   careInstructions: string;
@@ -31,6 +36,8 @@ const EMPTY_VALUES: ProductFormValues = {
   color: "",
   material: "",
   size: "",
+  sizeOptions: "",
+  genderOptions: "",
   sku: "",
   description: "",
   careInstructions: "",
@@ -67,6 +74,19 @@ export default function ProductForm({
     } else {
       setValues((prev) => ({ ...prev, [name]: e.target.value }));
     }
+  };
+
+  const toggleCsvOption = (field: "sizeOptions" | "genderOptions", option: string) => {
+    setValues((prev) => {
+      const current = prev[field]
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean);
+      const next = current.includes(option)
+        ? current.filter((v) => v !== option)
+        : [...current, option];
+      return { ...prev, [field]: next.join(",") };
+    });
   };
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,8 +180,48 @@ export default function ProductForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Size</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Size (dimension text)</label>
             <input name="size" value={values.size} onChange={handleChange} placeholder="e.g. 70cm x 140cm" className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-brand-primary focus:border-brand-primary" />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Size Selector (shown to customers on the product page)</label>
+            <div className="flex flex-wrap gap-2">
+              {SIZE_OPTION_CHOICES.map((option) => {
+                const selected = values.sizeOptions.split(",").map((v) => v.trim()).includes(option);
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => toggleCsvOption("sizeOptions", option)}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${selected ? "bg-brand-primary text-white border-brand-primary" : "bg-white text-gray-600 border-gray-300 hover:border-brand-primary"}`}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">Leave all unchecked to hide the size selector for this product.</p>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Gender Selector (shown to customers on the product page)</label>
+            <div className="flex flex-wrap gap-2">
+              {GENDER_OPTION_CHOICES.map((option) => {
+                const selected = values.genderOptions.split(",").map((v) => v.trim()).includes(option);
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => toggleCsvOption("genderOptions", option)}
+                    className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${selected ? "bg-brand-primary text-white border-brand-primary" : "bg-white text-gray-600 border-gray-300 hover:border-brand-primary"}`}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">Leave all unchecked to hide the gender selector for this product.</p>
           </div>
 
           <div className="flex items-center gap-6 mt-6">
