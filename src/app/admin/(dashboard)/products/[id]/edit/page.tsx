@@ -36,6 +36,7 @@ export default async function EditProductPage({ params }: { params: { id: string
     seoTitle: product.seoTitle || "",
     seoDescription: product.seoDescription || "",
     isFeatured: product.isFeatured,
+    isLimitedEdition: product.isLimitedEdition,
     isPublished: product.isPublished,
   };
 
