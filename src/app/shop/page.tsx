@@ -199,8 +199,8 @@ export default async function ShopPage({
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
-                  <div key={product.id} className="group flex flex-col bg-white rounded-lg overflow-hidden border border-brand-muted/20 hover:shadow-xl transition-all duration-300">
-                    <Link href={`/products/${product.slug}`} className="relative aspect-[4/5] overflow-hidden bg-brand-cream/20">
+                  <div key={product.id} className="group flex flex-col h-full bg-white rounded-lg overflow-hidden border border-brand-muted/20 hover:shadow-xl transition-all duration-300">
+                    <Link href={`/products/${product.slug}`} className="relative w-full h-80 overflow-hidden bg-brand-cream/20 flex-shrink-0">
                       {product.images.length > 0 ? (
                         <Image
                           src={product.images[0].url}
@@ -214,26 +214,26 @@ export default async function ShopPage({
                         </div>
                       )}
                     </Link>
-                    
+
                     <div className="p-5 flex flex-col flex-grow">
-                      <div className="flex justify-between items-start mb-2">
-                        <div className="text-xs text-brand-natural font-semibold uppercase tracking-wider">
+                      <div className="flex justify-between items-start gap-2 mb-3">
+                        <div className="text-xs text-brand-natural font-semibold uppercase tracking-wider truncate">
                           {product.category?.name || 'Uncategorized'}
                         </div>
                         {product.color && (
-                          <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded">
+                          <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">
                             {product.color}
                           </div>
                         )}
                       </div>
-                      
-                      <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors">
-                        <h3 className="text-lg font-bold text-brand-deep mb-2 line-clamp-2">
+
+                      <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors mb-2">
+                        <h3 className="text-base font-bold text-brand-deep line-clamp-2 h-14">
                           {product.name}
                         </h3>
                       </Link>
-                      
-                      <div className="flex items-center gap-2 mb-4 mt-auto">
+
+                      <div className="flex items-center gap-2 mb-3 h-8">
                         {product.salePrice ? (
                           <>
                             <span className="text-lg font-bold text-brand-primary">₹{product.salePrice.toString()}</span>
@@ -244,7 +244,7 @@ export default async function ShopPage({
                   )}
                       </div>
 
-                      <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-green-700">
+                      <div className="flex items-center gap-1.5 mb-6 text-xs font-semibold text-green-700 h-6">
                         <Truck size={14} />
                         <span>Free Shipping</span>
                       </div>
