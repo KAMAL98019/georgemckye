@@ -87,6 +87,11 @@ export default async function FeaturedProducts() {
                     SALE
                   </div>
                 )}
+                {product.isLimitedEdition && (
+                  <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                    Limited Edition
+                  </div>
+                )}
               </Link>
               
               <div className="p-5 flex flex-col flex-grow">
