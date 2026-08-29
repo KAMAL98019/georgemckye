@@ -2,13 +2,23 @@ import prisma from "@/lib/prisma";
 import FadeIn from "@/components/ui/FadeIn";
 import TestimonialsCarousel from "./TestimonialsCarousel";
 
+function shuffleArray<T>(arr: T[]): T[] {
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 async function getTestimonials() {
   try {
-    return await prisma.testimonial.findMany({
+    const testimonials = await prisma.testimonial.findMany({
       where: { isPublished: true },
       orderBy: { createdAt: "desc" },
       take: 10,
     });
+    return shuffleArray(testimonials);
   } catch (error) {
     console.error("Failed to load testimonials:", error);
     return [];
