@@ -216,15 +216,22 @@ export default async function ShopPage({
                     </Link>
 
                     <div className="p-6 flex flex-col flex-grow">
-                      <div className="flex justify-between items-start gap-2 mb-2">
+                      <div className="flex justify-between items-start gap-2 mb-2 flex-wrap">
                         <div className="text-xs text-brand-natural font-semibold uppercase tracking-wider truncate">
                           {product.category?.name || 'Uncategorized'}
                         </div>
-                        {product.color && (
-                          <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">
-                            {product.color}
-                          </div>
-                        )}
+                        <div className="flex gap-1.5">
+                          {product.isLimitedEdition && (
+                            <div className="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded border border-red-300">
+                              Limited Edition
+                            </div>
+                          )}
+                          {product.color && (
+                            <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">
+                              {product.color}
+                            </div>
+                          )}
+                        </div>
                       </div>
 
                       <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors mb-2">

@@ -25,6 +25,7 @@ export type ProductFormValues = {
   seoTitle: string;
   seoDescription: string;
   isFeatured: boolean;
+  isLimitedEdition: boolean;
   isPublished: boolean;
 };
 
@@ -45,6 +46,7 @@ const EMPTY_VALUES: ProductFormValues = {
   seoTitle: "",
   seoDescription: "",
   isFeatured: false,
+  isLimitedEdition: false,
   isPublished: true,
 };
 
@@ -228,6 +230,10 @@ export default function ProductForm({
             <label className="flex items-center gap-2 text-sm text-gray-900">
               <input type="checkbox" name="isFeatured" checked={values.isFeatured} onChange={handleChange} className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-gray-300 rounded" />
               Featured (Show on Homepage)
+            </label>
+            <label className="flex items-center gap-2 text-sm text-gray-900">
+              <input type="checkbox" name="isLimitedEdition" checked={values.isLimitedEdition} onChange={handleChange} className="h-4 w-4 text-red-600 focus:ring-red-600 border-gray-300 rounded" />
+              <span className="text-red-600 font-semibold">Limited Edition</span>
             </label>
             <label className="flex items-center gap-2 text-sm text-gray-900">
               <input type="checkbox" name="isPublished" checked={values.isPublished} onChange={handleChange} className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-gray-300 rounded" />
