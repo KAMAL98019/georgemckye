@@ -213,6 +213,11 @@ export default async function ShopPage({
                           No Image
                         </div>
                       )}
+                      {product.isLimitedEdition && (
+                        <div className="absolute top-3 right-3 bg-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                          Limited Edition
+                        </div>
+                      )}
                     </Link>
 
                     <div className="p-6 flex flex-col flex-grow">
@@ -220,18 +225,11 @@ export default async function ShopPage({
                         <div className="text-xs text-brand-natural font-semibold uppercase tracking-wider truncate">
                           {product.category?.name || 'Uncategorized'}
                         </div>
-                        <div className="flex gap-1.5">
-                          {product.isLimitedEdition && (
-                            <div className="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded border border-red-300">
-                              Limited Edition
-                            </div>
-                          )}
-                          {product.color && (
-                            <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">
-                              {product.color}
-                            </div>
-                          )}
-                        </div>
+                        {product.color && (
+                          <div className="text-xs text-gray-500 capitalize bg-gray-100 px-2 py-0.5 rounded flex-shrink-0">
+                            {product.color}
+                          </div>
+                        )}
                       </div>
 
                       <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors mb-2">
