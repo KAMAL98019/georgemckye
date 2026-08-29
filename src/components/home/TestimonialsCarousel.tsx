@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 import type { Testimonial } from "@prisma/client";
 
@@ -47,7 +48,17 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
       onFocus={pause}
     >
       <div className="bg-brand-cream/30 rounded-2xl p-8 md:p-12 border border-brand-muted/20 text-center min-h-[280px] flex flex-col items-center justify-center transition-opacity duration-300">
-        <Quote className="text-brand-primary/30 w-10 h-10 mb-4" />
+        {testimonial.imageUrl ? (
+          <Image
+            src={testimonial.imageUrl}
+            alt={testimonial.name}
+            width={64}
+            height={64}
+            className="rounded-full object-cover w-16 h-16 mb-4 border-2 border-white shadow-sm"
+          />
+        ) : (
+          <Quote className="text-brand-primary/30 w-10 h-10 mb-4" />
+        )}
         <div className="flex gap-1 mb-4">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star

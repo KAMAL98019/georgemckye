@@ -187,6 +187,7 @@ model OrderItem {
 model Testimonial {
   id        String   @id @default(uuid())
   name      String
+  imageUrl  String?
   content   String   @db.Text
   rating    Int      @default(5)
   isPublished Boolean @default(true)

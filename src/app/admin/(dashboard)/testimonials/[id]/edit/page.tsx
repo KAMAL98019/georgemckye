@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { updateTestimonial } from "../../actions";
 
@@ -35,6 +36,20 @@ export default async function EditTestimonialPage({ params }: { params: { id: st
               <option key={r} value={r}>{r} Stars</option>
             ))}
           </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Photo (optional)</label>
+          {testimonial.imageUrl && (
+            <div className="flex items-center gap-3 mb-3">
+              <Image src={testimonial.imageUrl} alt={testimonial.name} width={56} height={56} className="rounded-full object-cover w-14 h-14" />
+              <label className="flex items-center gap-2 text-sm text-gray-600">
+                <input type="checkbox" name="removeImage" className="rounded border-gray-300" />
+                Remove current photo
+              </label>
+            </div>
+          )}
+          <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/avif" className="w-full text-sm text-gray-600" />
+          <p className="text-xs text-gray-400 mt-1">Uploading a new photo replaces the current one. Leave empty to keep it, or check &quot;Remove&quot; for text-only.</p>
         </div>
         <button type="submit" className="bg-brand-primary text-white py-2 px-4 rounded-md hover:bg-brand-deep transition-colors text-sm font-medium">
           Save Changes
