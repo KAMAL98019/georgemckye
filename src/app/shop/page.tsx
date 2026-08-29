@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
-import { Filter } from "lucide-react";
+import { Filter, Truck } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
@@ -242,6 +242,11 @@ export default async function ShopPage({
                         ) : (
                           <span className="text-lg font-bold text-brand-deep">₹{product.price.toString()}</span>
                   )}
+                      </div>
+
+                      <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-green-700">
+                        <Truck size={14} />
+                        <span>Free Shipping</span>
                       </div>
 
                       <AddToCartButtons

@@ -269,6 +269,26 @@ export async function toggleProductPublish(id: string, isPublished: boolean) {
   revalidatePath("/admin/products");
 }
 
+// Quick inline rename from the products table. Deliberately leaves the slug
+// untouched so existing product URLs (bookmarks, shared links, SEO) keep
+// working — changing the slug is still a deliberate action on the full edit form.
+export async function updateProductName(id: string, name: string): Promise<{ error?: string }> {
+  const trimmed = name.trim();
+  if (!trimmed) {
+    return { error: "Name can't be empty." };
+  }
+  if (trimmed.length > 200) {
+    return { error: "Name is too long." };
+  }
+
+  await prisma.product.update({ where: { id }, data: { name: trimmed } });
+
+  revalidatePath("/");
+  revalidatePath("/shop");
+  revalidatePath("/admin/products");
+  return {};
+}
+
 export async function deleteProductImage(productId: string, imageId: string) {
   const image = await prisma.productImage.findUnique({ where: { id: imageId } });
   if (!image) return;

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Truck } from "lucide-react";
 import prisma from "@/lib/prisma";
 import AddToCartButtons from "@/components/ui/AddToCartButtons";
 import FadeIn from "@/components/ui/FadeIn";
@@ -107,6 +108,11 @@ export default async function FeaturedProducts() {
                   ) : (
                     <span className="text-lg font-bold text-brand-deep">₹{product.price.toString()}</span>
                   )}
+                </div>
+
+                <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-green-700">
+                  <Truck size={14} />
+                  <span>Free Shipping</span>
                 </div>
 
                 <AddToCartButtons

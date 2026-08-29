@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Plus, Edit, Eye, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { deleteProduct, toggleProductPublish } from "@/app/admin/actions";
+import { deleteProduct, toggleProductPublish, updateProductName } from "@/app/admin/actions";
 import ConfirmDeleteButton from "@/components/admin/ConfirmDeleteButton";
+import InlineEditName from "@/components/admin/InlineEditName";
 
 export const dynamic = "force-dynamic";
 
@@ -51,7 +52,7 @@ export default async function AdminProductsPage() {
               products.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-gray-900">
-                    {product.name}
+                    <InlineEditName id={product.id} initialName={product.name} action={updateProductName} />
                     {product.isFeatured && (
                       <span className="ml-2 inline-flex items-center rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800">
                         Featured
