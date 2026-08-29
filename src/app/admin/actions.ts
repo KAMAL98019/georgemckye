@@ -45,6 +45,7 @@ const productSchema = z.object({
   seoTitle: z.string().trim().optional(),
   seoDescription: z.string().trim().optional(),
   isFeatured: z.boolean().default(false),
+  isLimitedEdition: z.boolean().default(false),
   isPublished: z.boolean().default(true),
 });
 
@@ -67,6 +68,7 @@ export async function uploadProduct(formData: FormData): Promise<{ error?: strin
     seoTitle: formData.get("seoTitle") || undefined,
     seoDescription: formData.get("seoDescription") || undefined,
     isFeatured: formData.get("isFeatured") === "on",
+    isLimitedEdition: formData.get("isLimitedEdition") === "on",
     isPublished: formData.get("isPublished") === "on",
   });
 
@@ -153,6 +155,7 @@ export async function updateProduct(id: string, formData: FormData): Promise<{ e
     seoTitle: formData.get("seoTitle") || undefined,
     seoDescription: formData.get("seoDescription") || undefined,
     isFeatured: formData.get("isFeatured") === "on",
+    isLimitedEdition: formData.get("isLimitedEdition") === "on",
     isPublished: formData.get("isPublished") === "on",
   });
 
