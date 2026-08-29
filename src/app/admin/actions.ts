@@ -184,6 +184,7 @@ export async function updateProduct(id: string, formData: FormData): Promise<{ e
         salePrice: data.salePrice && !Number.isNaN(data.salePrice) ? data.salePrice : null,
         stock: data.stock,
         isFeatured: data.isFeatured,
+        isLimitedEdition: data.isLimitedEdition,
         isPublished: data.isPublished,
         color: data.color || null,
         material: data.material || null,
