@@ -47,30 +47,15 @@ export default function TestimonialsCarousel({ testimonials }: { testimonials: T
       onMouseEnter={pause}
       onFocus={pause}
     >
-      <div className={`bg-brand-cream/30 rounded-2xl p-8 md:p-12 border border-brand-muted/20 text-center ${testimonial.imageUrl ? "min-h-[550px]" : "min-h-[280px]"} flex flex-col items-center justify-center transition-all duration-300`}>
+      <div className={`bg-brand-cream/30 rounded-2xl p-8 md:p-12 border border-brand-muted/20 text-center ${testimonial.imageUrl ? "min-h-[400px]" : "min-h-[280px]"} flex flex-col items-center justify-center transition-all duration-300`}>
         {testimonial.imageUrl ? (
-          <>
-            <Image
-              src={testimonial.imageUrl}
-              alt={testimonial.name}
-              width={280}
-              height={280}
-              className="rounded-lg object-cover w-64 h-64 mb-6 border-2 border-white shadow-lg"
-            />
-            <div className="flex gap-1 mb-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  size={16}
-                  className={i < testimonial.rating ? "fill-brand-primary text-brand-primary" : "text-brand-muted"}
-                />
-              ))}
-            </div>
-            <p className="text-lg text-brand-deep/80 leading-relaxed mb-6 max-w-xl">
-              &ldquo;{testimonial.content}&rdquo;
-            </p>
-            <p className="font-bold text-brand-deep text-xl">{testimonial.name}</p>
-          </>
+          <Image
+            src={testimonial.imageUrl}
+            alt={testimonial.name}
+            width={320}
+            height={320}
+            className="rounded-lg object-cover w-80 h-80 border-2 border-white shadow-lg"
+          />
         ) : (
           <>
             <Quote className="text-brand-primary/30 w-10 h-10 mb-4" />
