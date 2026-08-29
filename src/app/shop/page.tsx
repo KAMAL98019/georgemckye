@@ -199,8 +199,8 @@ export default async function ShopPage({
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product) => (
-                  <div key={product.id} className="group flex flex-col bg-white rounded-lg overflow-hidden border border-brand-muted/20 hover:shadow-xl transition-all duration-300">
-                    <Link href={`/products/${product.slug}`} className="relative w-full aspect-square overflow-hidden bg-brand-cream/20">
+                  <div key={product.id} className="group flex flex-col h-full bg-white rounded-lg overflow-hidden border border-brand-muted/20 hover:shadow-xl transition-all duration-300">
+                    <Link href={`/products/${product.slug}`} className="relative w-full aspect-square overflow-hidden bg-brand-cream/20 flex-shrink-0">
                       {product.images.length > 0 ? (
                         <Image
                           src={product.images[0].url}
@@ -215,7 +215,7 @@ export default async function ShopPage({
                       )}
                     </Link>
 
-                    <div className="p-6 flex flex-col">
+                    <div className="p-6 flex flex-col flex-grow">
                       <div className="flex justify-between items-start gap-2 mb-2">
                         <div className="text-xs text-brand-natural font-semibold uppercase tracking-wider truncate">
                           {product.category?.name || 'Uncategorized'}
@@ -227,7 +227,7 @@ export default async function ShopPage({
                         )}
                       </div>
 
-                      <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors mb-3">
+                      <Link href={`/products/${product.slug}`} className="hover:text-brand-primary transition-colors mb-2">
                         <h3 className="text-lg font-bold text-brand-deep line-clamp-2">
                           {product.name}
                         </h3>
@@ -244,22 +244,24 @@ export default async function ShopPage({
                   )}
                       </div>
 
-                      <div className="flex items-center gap-1.5 mb-5 text-xs font-semibold text-green-700">
+                      <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-green-700">
                         <Truck size={14} />
                         <span>Free Shipping</span>
                       </div>
 
-                      <AddToCartButtons
-                        product={{
-                          id: product.id,
-                          name: product.name,
-                          price: Number(product.price),
-                          sku: product.sku,
-                          image: product.images.length > 0 ? product.images[0].url : undefined
-                        }}
-                        sizeOptions={parseCsvOptions(product.sizeOptions)}
-                        genderOptions={parseCsvOptions(product.genderOptions)}
-                      />
+                      <div className="mt-auto">
+                        <AddToCartButtons
+                          product={{
+                            id: product.id,
+                            name: product.name,
+                            price: Number(product.price),
+                            sku: product.sku,
+                            image: product.images.length > 0 ? product.images[0].url : undefined
+                          }}
+                          sizeOptions={parseCsvOptions(product.sizeOptions)}
+                          genderOptions={parseCsvOptions(product.genderOptions)}
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
