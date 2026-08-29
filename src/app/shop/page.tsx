@@ -249,6 +249,12 @@ export default async function ShopPage({
                         <span>Free Shipping</span>
                       </div>
 
+                      {!parseCsvOptions(product.sizeOptions).length && product.description && (
+                        <p className="text-sm text-brand-deep/70 mb-4 line-clamp-3">
+                          {product.description}
+                        </p>
+                      )}
+
                       <div className="mt-auto">
                         <AddToCartButtons
                           product={{
