@@ -86,21 +86,30 @@ export default function CartSidebar() {
         </div>
 
         {/* Footer */}
-        {items.length > 0 && (
-          <div className="p-6 border-t border-gray-200 bg-gray-50">
-            <div className="flex justify-between mb-4 text-lg font-bold">
-              <span>Total:</span>
-              <span className="text-brand-primary">₹{cartTotal}</span>
-            </div>
-            <Link
-              href="/cart"
-              onClick={closeCart}
-              className="block w-full text-center bg-brand-primary text-white py-3 rounded-md font-bold hover:bg-brand-deep transition-colors"
-            >
-              Review Cart
-            </Link>
-          </div>
-        )}
+        <div className="p-6 border-t border-gray-200 bg-gray-50 space-y-3">
+          {items.length > 0 && (
+            <>
+              <div className="flex justify-between text-lg font-bold">
+                <span>Total:</span>
+                <span className="text-brand-primary">₹{cartTotal}</span>
+              </div>
+              <Link
+                href="/cart"
+                onClick={closeCart}
+                className="block w-full text-center bg-brand-primary text-white py-3 rounded-md font-bold hover:bg-brand-deep transition-colors"
+              >
+                Review Cart
+              </Link>
+            </>
+          )}
+          <Link
+            href="/shop"
+            onClick={closeCart}
+            className="block w-full text-center bg-brand-deep text-white py-3 rounded-md font-bold hover:bg-brand-primary transition-colors"
+          >
+            Continue Shopping
+          </Link>
+        </div>
       </div>
     </>
   );

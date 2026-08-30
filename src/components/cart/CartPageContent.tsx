@@ -204,11 +204,18 @@ export default function CartPageContent() {
 
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 px-4 rounded-md font-bold hover:bg-[#1DA851] transition-colors shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-3.5 px-4 rounded-md font-bold hover:bg-[#1DA851] transition-colors shadow-sm mb-3"
                 >
                   <MessageCircle size={20} />
                   <span>REQUEST ON WHATSAPP</span>
                 </button>
+
+                <Link
+                  href="/shop"
+                  className="block w-full text-center bg-brand-deep text-white py-3.5 px-4 rounded-md font-bold hover:bg-brand-primary transition-colors shadow-sm"
+                >
+                  Continue Shopping
+                </Link>
 
                 <p className="text-xs text-center text-brand-deep/50 mt-4 px-2">
                   Shipping and final pricing will be confirmed over WhatsApp before payment.
