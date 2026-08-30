@@ -227,3 +227,19 @@ enum EnquiryStatus {
   READ
   RESOLVED
 }
+
+model Coupon {
+  id              String   @id @default(uuid())
+  code            String   @unique
+  discountPercent Decimal  @db.Decimal(5, 2)
+  maxUses         Int?
+  usedCount       Int      @default(0)
+  isActive        Boolean  @default(true)
+  expiryDate      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([code])
+  @@index([isActive])
+  @@map("coupon")
+}

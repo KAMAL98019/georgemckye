@@ -205,7 +205,6 @@ export async function updateProduct(id: string, formData: FormData): Promise<{ e
         },
       },
     });
-
     revalidatePath("/");
     revalidatePath("/shop");
     revalidatePath("/admin/products");
