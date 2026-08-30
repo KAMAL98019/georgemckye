@@ -3,12 +3,50 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import WhatsAppCheckoutModal from "@/components/cart/WhatsAppCheckoutModal";
+import { validateCoupon, calculateDiscountedPrice } from "@/lib/couponValidator";
 import Link from "next/link";
-import { Trash2, Plus, Minus, MessageCircle } from "lucide-react";
+import { Trash2, Plus, Minus, MessageCircle, Ticket, X } from "lucide-react";
 
 export default function CartPageContent() {
   const { items, removeFromCart, updateQuantity, cartTotal } = useCart();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [couponError, setCouponError] = useState("");
+  const [isLoadingCoupon, setIsLoadingCoupon] = useState(false);
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError("Please enter a coupon code");
+      return;
+    }
+
+    setIsLoadingCoupon(true);
+    setCouponError("");
+
+    const result = await validateCoupon(couponCode);
+    if (result.valid) {
+      setAppliedCoupon(result.coupon);
+      setCouponCode("");
+    } else {
+      setCouponError(result.error || "Invalid coupon");
+      setAppliedCoupon(null);
+    }
+
+    setIsLoadingCoupon(false);
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
+    setCouponError("");
+  };
+
+  const discountData = appliedCoupon
+    ? calculateDiscountedPrice(cartTotal, Number(appliedCoupon.discountPercent))
+    : null;
+
+  const finalTotal = discountData ? discountData.finalPrice : cartTotal;
 
   return (
     <>
@@ -100,6 +138,59 @@ export default function CartPageContent() {
                   <span>Subtotal</span>
                   <span className="font-medium">₹{cartTotal}</span>
                 </div>
+
+                {!appliedCoupon ? (
+                  <div className="mb-6 pb-6 border-b border-brand-muted/20">
+                    <div className="flex gap-2 mb-2">
+                      <div className="flex-grow relative">
+                        <input
+                          type="text"
+                          value={couponCode}
+                          onChange={(e) => {
+                            setCouponCode(e.target.value.toUpperCase());
+                            setCouponError("");
+                          }}
+                          onKeyPress={(e) => e.key === "Enter" && handleApplyCoupon()}
+                          placeholder="BNI-12345"
+                          className="w-full px-3 py-2 border border-brand-muted/30 rounded text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                        />
+                        <Ticket size={14} className="absolute right-3 top-2.5 text-brand-muted/50" />
+                      </div>
+                      <button
+                        onClick={handleApplyCoupon}
+                        disabled={isLoadingCoupon || !couponCode.trim()}
+                        className="px-3 py-2 bg-brand-primary text-white text-sm font-medium rounded hover:bg-brand-deep transition-colors disabled:opacity-50"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && <p className="text-xs text-red-600">{couponError}</p>}
+                    <p className="text-xs text-brand-deep/50 mt-2">Format: BNI-xxxxx (e.g., BNI-12345)</p>
+                  </div>
+                ) : (
+                  <div className="mb-6 pb-6 border-b border-brand-muted/20 bg-green-50 p-3 rounded flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-semibold text-green-700 uppercase">Coupon Applied</p>
+                      <p className="text-sm font-bold text-brand-deep">{appliedCoupon.code}</p>
+                      <p className="text-xs text-green-700 font-medium">{appliedCoupon.discountPercent.toString()}% discount</p>
+                    </div>
+                    <button
+                      onClick={removeCoupon}
+                      className="text-green-700 hover:text-red-600 transition-colors p-1"
+                      title="Remove coupon"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
+
+                {discountData && (
+                  <div className="flex justify-between mb-4 text-green-700 font-semibold">
+                    <span>Discount</span>
+                    <span>-₹{discountData.discount}</span>
+                  </div>
+                )}
+
                 <div className="flex justify-between mb-6 text-brand-deep/80 pb-6 border-b border-brand-muted/20">
                   <span>Shipping</span>
                   <span className="text-sm italic">Calculated next</span>
@@ -107,7 +198,7 @@ export default function CartPageContent() {
 
                 <div className="flex justify-between mb-8 text-xl font-bold text-brand-deep">
                   <span>Estimated Total</span>
-                  <span>₹{cartTotal}</span>
+                  <span>₹{finalTotal}</span>
                 </div>
 
                 <button
@@ -127,7 +218,13 @@ export default function CartPageContent() {
         )}
       </main>
 
-      <WhatsAppCheckoutModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <WhatsAppCheckoutModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        appliedCoupon={appliedCoupon}
+        discountAmount={discountData?.discount}
+        finalTotal={finalTotal}
+      />
     </>
   );
 }

@@ -50,7 +50,7 @@ export default async function CouponsPage() {
                 {coupons.map((coupon) => (
                   <tr key={coupon.id} className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-6 py-4 font-bold text-brand-primary">{coupon.code}</td>
-                    <td className="px-6 py-4 font-semibold">{coupon.discountPercent}%</td>
+                    <td className="px-6 py-4 font-semibold">{coupon.discountPercent.toString()}%</td>
                     <td className="px-6 py-4">{coupon.maxUses || "Unlimited"}</td>
                     <td className="px-6 py-4">{coupon.usedCount}</td>
                     <td className="px-6 py-4 text-sm">

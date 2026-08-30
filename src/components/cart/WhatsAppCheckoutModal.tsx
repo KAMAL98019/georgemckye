@@ -7,7 +7,15 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { createWhatsAppOrder } from "@/lib/actions/orders";
 import { X, Send } from "lucide-react";
 
-export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+type WhatsAppCheckoutModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  appliedCoupon?: { code: string; discountPercent: string } | null;
+  discountAmount?: number;
+  finalTotal?: number;
+};
+
+export default function WhatsAppCheckoutModal({ isOpen, onClose, appliedCoupon, discountAmount, finalTotal }: WhatsAppCheckoutModalProps) {
   const { items, cartTotal, clearCart } = useCart();
   const { whatsappNumber } = useSiteSettings();
   const [formData, setFormData] = useState({
@@ -67,7 +75,13 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boo
       message += `Quantity: ${item.quantity}\nPrice: ₹${item.price * item.quantity}\n\n`;
     });
 
-    message += `*Estimated Total: ₹${cartTotal}*\n\n`;
+    if (appliedCoupon) {
+      message += `*Coupon: ${appliedCoupon.code}*\n`;
+      message += `Discount: ₹${discountAmount} (${appliedCoupon.discountPercent.toString()}% off)\n`;
+      message += `*Total after discount: ₹${finalTotal}*\n\n`;
+    } else {
+      message += `*Estimated Total: ₹${cartTotal}*\n\n`;
+    }
     message += `*CUSTOMER DETAILS*\n-------------------------\n`;
     message += `Name: ${formData.name}\nPhone: ${formData.phone}\n`;
     if (formData.email) message += `Email: ${formData.email}\n`;
@@ -155,9 +169,17 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose }: { isOpen: boo
                 </div>
               ))}
             </div>
+            {appliedCoupon && (
+              <>
+                <div className="flex justify-between text-sm pt-2 pb-2 border-t border-gray-200 text-green-700 font-semibold">
+                  <span>Coupon: {appliedCoupon.code}</span>
+                  <span>-₹{discountAmount}</span>
+                </div>
+              </>
+            )}
             <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200">
               <span>Estimated Total:</span>
-              <span>₹{cartTotal}</span>
+              <span>₹{appliedCoupon ? finalTotal : cartTotal}</span>
             </div>
           </div>
 
