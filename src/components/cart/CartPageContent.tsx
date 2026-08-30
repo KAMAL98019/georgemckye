@@ -196,11 +196,6 @@ export default function CartPageContent() {
                   </div>
                 )}
 
-                <div className="flex justify-between mb-6 text-brand-deep/80 pb-6 border-b border-brand-muted/20">
-                  <span>Shipping</span>
-                  <span className="text-sm italic">Calculated next</span>
-                </div>
-
                 <div className="flex justify-between mb-8 text-xl font-bold text-brand-deep">
                   <span>Estimated Total</span>
                   <span>₹{finalTotal}</span>

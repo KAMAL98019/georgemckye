@@ -2,16 +2,14 @@
 > georgemckye@0.1.0 dev
 > next dev
 
- ⚠ Port 3000 is in use, trying 3001 instead.
   ▲ Next.js 14.2.35
-  - Local:        http://localhost:3001
+  - Local:        http://localhost:3000
   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 2.4s
+ ✓ Ready in 2.1s
  ○ Compiling /cart ...
- ✓ Compiled /cart in 3.1s (788 modules)
- GET /cart 200 in 3373ms
- ✓ Compiled in 302ms (317 modules)
- ✓ Compiled in 48ms (303 modules)
- ✓ Compiled in 265ms (317 modules)
+ ✓ Compiled /cart in 2s (779 modules)
+ GET /cart 200 in 2369ms
+ ✓ Compiled in 384ms (317 modules)
+ ✓ Compiled in 232ms (317 modules)
