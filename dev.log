@@ -7,38 +7,64 @@
   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 2.3s
- ○ Compiling /cart ...
- ✓ Compiled /cart in 1970ms (779 modules)
- ✓ Compiled in 393ms (317 modules)
- GET /cart 200 in 2416ms
- ✓ Compiled in 209ms (303 modules)
- ○ Compiling / ...
- ✓ Compiled /shop in 2.6s (1635 modules)
- GET / 200 in 2869ms
- GET /shop?category=towels 200 in 1533ms
- ✓ Compiled /src/middleware in 313ms (129 modules)
- ✓ Compiled /admin in 263ms (1644 modules)
- GET /admin 307 in 437ms
+ ✓ Ready in 3.5s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1326ms (129 modules)
+ ○ Compiling /admin/coupons ...
+ ✓ Compiled /admin/coupons in 5.9s (808 modules)
+ ✓ Compiled in 723ms (291 modules)
+ ✓ Compiled in 97ms (277 modules)
+ ○ Compiling /admin/coupons/new ...
+ ✓ Compiled /admin/coupons/new in 1311ms (808 modules)
+ POST /admin/coupons/new 303 in 259ms
  ○ Compiling /admin/dashboard ...
- ✓ Compiled /admin/dashboard in 644ms (1823 modules)
- GET /admin/dashboard 200 in 924ms
+ ✓ Compiled /admin/dashboard in 1621ms (818 modules)
  ○ Compiling /admin/products ...
- ✓ Compiled /admin/products in 795ms (1858 modules)
- ✓ Compiled /admin/products/[id]/edit in 463ms (1874 modules)
- ✓ Compiled /admin/orders in 285ms (1878 modules)
- ✓ Compiled /admin/customers in 424ms (1428 modules)
- GET /admin/products 200 in 199ms
- ✓ Compiled /admin/categories in 485ms (1446 modules)
- ✓ Compiled /admin/enquiries in 441ms (1453 modules)
- ○ Compiling /admin/products/new ...
- ✓ Compiled /admin/products/new in 571ms (1319 modules)
- GET /admin/products 200 in 151ms
- GET /admin/products 200 in 95ms
- GET /admin/products 200 in 98ms
- GET /admin/products 200 in 94ms
- GET /admin/products 200 in 101ms
- ✓ Compiled in 545ms (1320 modules)
- ✓ Compiled /favicon.ico in 103ms (596 modules)
- GET /favicon.ico 200 in 161ms
- ✓ Compiled in 282ms (1353 modules)
+ ✓ Compiled /admin/products in 1404ms (844 modules)
+ ○ Compiling /admin/categories ...
+ ✓ Compiled /admin/categories in 1088ms (854 modules)
+ ○ Compiling /admin/orders ...
+ ✓ Compiled /admin/orders in 551ms (858 modules)
+ ○ Compiling /admin/enquiries ...
+ ✓ Compiled /admin/enquiries in 625ms (867 modules)
+ ○ Compiling /admin/customers ...
+ ✓ Compiled /admin/customers in 639ms (871 modules)
+ ○ Compiling /admin/testimonials ...
+ ✓ Compiled /admin/testimonials in 957ms (883 modules)
+ ○ Compiling /admin/settings ...
+ ✓ Compiled /admin/settings in 1101ms (1016 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 1160ms (1072 modules)
+ GET /cart 200 in 1633ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 668ms (1044 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 935ms
+ GET /cart 200 in 170ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 66ms
+ GET /admin/coupons 200 in 316ms
+ GET /admin/coupons 200 in 124ms
+ GET /cart 200 in 130ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 66ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.3s (1217 modules)
+ GET /cart 404 in 4381ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 190ms
+ GET /_next/static/css/app/layout.css?v=1788079887250 404 in 43ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 615ms (730 modules)
+ GET /favicon.ico 200 in 835ms
+ GET /favicon.ico 200 in 41ms
+ GET /_next/static/css/app/layout.css?v=1788079953815 404 in 129ms
+ GET /cart 200 in 477ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 228ms
+ GET /_next/static/chunks/main-app.js?v=1788079953815 404 in 226ms
+ GET /_next/static/chunks/app/cart/page.js 404 in 231ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 83ms
+ GET /_next/static/chunks/app/layout.js 404 in 221ms
+ GET /cart 200 in 248ms
+ GET /_next/static/css/app/layout.css?v=1788079956144 404 in 160ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 211ms
+ GET /_next/static/chunks/main-app.js?v=1788079956144 404 in 222ms
+ GET /_next/static/chunks/app/cart/page.js 404 in 220ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 76ms
+ GET /_next/static/chunks/app/layout.js 404 in 186ms

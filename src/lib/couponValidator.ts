@@ -3,14 +3,16 @@ import prisma from "@/lib/prisma";
 const BNI_COUPON_REGEX = /^BNI-\d+$/i;
 
 export async function validateCoupon(code: string) {
+  const cleanCode = code.trim().toUpperCase();
+
   // Format validation
-  if (!BNI_COUPON_REGEX.test(code.trim())) {
-    return { valid: false, error: "Coupon format must be BNI-xxxxx (e.g., BNI-12345)" };
+  if (!BNI_COUPON_REGEX.test(cleanCode)) {
+    return { valid: false, error: "Coupon format must be BNI-xxxxx (e.g., BNI-15 or BNI-12345)" };
   }
 
   try {
     const coupon = await prisma.coupon.findUnique({
-      where: { code: code.toUpperCase() },
+      where: { code: cleanCode },
     });
 
     if (!coupon) {

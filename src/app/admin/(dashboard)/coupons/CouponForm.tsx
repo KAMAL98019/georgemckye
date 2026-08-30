@@ -88,7 +88,7 @@ export default function CouponForm({
             required
             className="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-brand-primary focus:border-brand-primary"
           />
-          <p className="text-xs text-gray-500 mt-1">Format: BNI-xxxxx (digits only)</p>
+          <p className="text-xs text-gray-500 mt-1">Format: BNI-digits (e.g., BNI-15, BNI-12345)</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
