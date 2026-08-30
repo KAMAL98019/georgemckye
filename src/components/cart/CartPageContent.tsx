@@ -157,7 +157,7 @@ export default function CartPageContent() {
                             setCouponError("");
                           }}
                           onKeyPress={(e) => e.key === "Enter" && handleApplyCoupon()}
-                          placeholder="BNI-12345"
+                          placeholder="BNI12345"
                           className="w-full px-3 py-2 border border-brand-muted/30 rounded text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary"
                         />
                         <Ticket size={14} className="absolute right-3 top-2.5 text-brand-muted/50" />
@@ -171,7 +171,7 @@ export default function CartPageContent() {
                       </button>
                     </div>
                     {couponError && <p className="text-xs text-red-600">{couponError}</p>}
-                    <p className="text-xs text-brand-deep/50 mt-2">Format: BNI-xxxxx (e.g., BNI-12345)</p>
+                    <p className="text-xs text-brand-deep/50 mt-2">Format: BNI + digits (e.g., BNI15, BNI12345)</p>
                   </div>
                 ) : (
                   <div className="mb-6 pb-6 border-b border-brand-muted/20 bg-green-50 p-3 rounded flex items-center justify-between">

@@ -7,27 +7,4 @@
   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 1966ms
- ○ Compiling /cart ...
- ✓ Compiled /cart in 3.8s (777 modules)
- ✓ Compiled in 584ms (314 modules)
- ✓ Compiled in 223ms (300 modules)
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 717ms (766 modules)
-Warning: Only plain objects can be passed to Client Components from Server Components. Decimal objects are not supported.
-  {id: ..., code: "BNI-15", discountPercent: Decimal, maxUses: ..., usedCount: ..., isActive: ..., expiryDate: ..., createdAt: ..., updatedAt: ...}
-                                             ^^^^^^^
- POST /cart 200 in 122ms
- POST /cart 404 in 1217ms
- ○ Compiling /shop ...
- ✓ Compiled /shop in 611ms (781 modules)
- ○ Compiling / ...
- ✓ Compiled / in 4.8s (1524 modules)
- ✓ Compiled in 484ms (730 modules)
- ✓ Compiled in 548ms (730 modules)
- ✓ Compiled in 336ms (730 modules)
- ✓ Compiled in 423ms (730 modules)
- ✓ Compiled in 589ms (731 modules)
- ✓ Compiled in 341ms (731 modules)
- ✓ Compiled in 310ms (731 modules)
- ✓ Compiled in 392ms (731 modules)
+ ✓ Ready in 2.7s

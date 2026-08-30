@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const couponSchema = z.object({
-  code: z.string().toUpperCase().regex(/^BNI-\d+$/, "Code must be in format BNI-xxxxx"),
+  code: z.string().toUpperCase().regex(/^BNI\d+$/, "Code must be in format BNIxxxxx"),
   discountPercent: z.coerce.number().min(0.01).max(100, "Discount must be between 0.01 and 100"),
   maxUses: z.coerce.number().int().min(1).optional(),
   expiryDate: z.string().optional(),

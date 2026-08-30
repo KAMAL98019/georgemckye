@@ -2,14 +2,14 @@
 
 import prisma from "@/lib/prisma";
 
-const BNI_COUPON_REGEX = /^BNI-\d+$/i;
+const BNI_COUPON_REGEX = /^BNI\d+$/i;
 
 export async function validateCouponAction(code: string) {
   const cleanCode = code.trim().toUpperCase();
 
   // Format validation
   if (!BNI_COUPON_REGEX.test(cleanCode)) {
-    return { valid: false, error: "Coupon format must be BNI-xxxxx (e.g., BNI-15 or BNI-12345)" };
+    return { valid: false, error: "Coupon format must be BNIxxxxx (e.g., BNI15 or BNI12345)" };
   }
 
   try {
