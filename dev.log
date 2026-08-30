@@ -7,64 +7,24 @@
   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 3.5s
- ○ Compiling /src/middleware ...
- ✓ Compiled /src/middleware in 1326ms (129 modules)
- ○ Compiling /admin/coupons ...
- ✓ Compiled /admin/coupons in 5.9s (808 modules)
- ✓ Compiled in 723ms (291 modules)
- ✓ Compiled in 97ms (277 modules)
- ○ Compiling /admin/coupons/new ...
- ✓ Compiled /admin/coupons/new in 1311ms (808 modules)
- POST /admin/coupons/new 303 in 259ms
- ○ Compiling /admin/dashboard ...
- ✓ Compiled /admin/dashboard in 1621ms (818 modules)
- ○ Compiling /admin/products ...
- ✓ Compiled /admin/products in 1404ms (844 modules)
- ○ Compiling /admin/categories ...
- ✓ Compiled /admin/categories in 1088ms (854 modules)
- ○ Compiling /admin/orders ...
- ✓ Compiled /admin/orders in 551ms (858 modules)
- ○ Compiling /admin/enquiries ...
- ✓ Compiled /admin/enquiries in 625ms (867 modules)
- ○ Compiling /admin/customers ...
- ✓ Compiled /admin/customers in 639ms (871 modules)
- ○ Compiling /admin/testimonials ...
- ✓ Compiled /admin/testimonials in 957ms (883 modules)
- ○ Compiling /admin/settings ...
- ✓ Compiled /admin/settings in 1101ms (1016 modules)
+ ✓ Ready in 3.3s
  ○ Compiling /cart ...
- ✓ Compiled /cart in 1160ms (1072 modules)
- GET /cart 200 in 1633ms
+ ✓ Compiled /cart in 5.9s (779 modules)
+ ✓ Compiled in 560ms (317 modules)
+ GET /cart 200 in 6564ms
+ ✓ Compiled in 64ms (303 modules)
+ GET /cart 200 in 250ms
+ GET /cart 200 in 103ms
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1272ms (129 modules)
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 1589ms (935 modules)
+ GET /admin/login?callbackUrl=%2Fadmin%2Fcoupons 200 in 2103ms
+ GET /cart 200 in 169ms
+ ○ Compiling /shop ...
+ ✓ Compiled /shop in 629ms (950 modules)
  ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 668ms (1044 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 935ms
- GET /cart 200 in 170ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 66ms
- GET /admin/coupons 200 in 316ms
- GET /admin/coupons 200 in 124ms
- GET /cart 200 in 130ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 66ms
- ○ Compiling /_error ...
- ✓ Compiled /_error in 3.3s (1217 modules)
- GET /cart 404 in 4381ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 190ms
- GET /_next/static/css/app/layout.css?v=1788079887250 404 in 43ms
- ○ Compiling /favicon.ico ...
- ✓ Compiled /favicon.ico in 615ms (730 modules)
- GET /favicon.ico 200 in 835ms
- GET /favicon.ico 200 in 41ms
- GET /_next/static/css/app/layout.css?v=1788079953815 404 in 129ms
- GET /cart 200 in 477ms
- GET /_next/static/chunks/app-pages-internals.js 404 in 228ms
- GET /_next/static/chunks/main-app.js?v=1788079953815 404 in 226ms
- GET /_next/static/chunks/app/cart/page.js 404 in 231ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 83ms
- GET /_next/static/chunks/app/layout.js 404 in 221ms
- GET /cart 200 in 248ms
- GET /_next/static/css/app/layout.css?v=1788079956144 404 in 160ms
- GET /_next/static/chunks/app-pages-internals.js 404 in 211ms
- GET /_next/static/chunks/main-app.js?v=1788079956144 404 in 222ms
- GET /_next/static/chunks/app/cart/page.js 404 in 220ms
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 76ms
- GET /_next/static/chunks/app/layout.js 404 in 186ms
+ ✓ Compiled /_not-found in 624ms (953 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 900ms
+ ✓ Compiled in 5.3s (968 modules)
+ ✓ Compiled in 313ms (949 modules)

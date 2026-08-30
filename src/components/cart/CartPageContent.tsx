@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import WhatsAppCheckoutModal from "@/components/cart/WhatsAppCheckoutModal";
-import { validateCoupon, calculateDiscountedPrice } from "@/lib/couponValidator";
+import { calculateDiscountedPrice } from "@/lib/couponValidator";
+import { validateCouponAction } from "@/actions/coupon";
 import Link from "next/link";
 import { Trash2, Plus, Minus, MessageCircle, Ticket, X } from "lucide-react";
 
@@ -24,7 +25,7 @@ export default function CartPageContent() {
     setIsLoadingCoupon(true);
     setCouponError("");
 
-    const result = await validateCoupon(couponCode);
+    const result = await validateCouponAction(couponCode);
     if (result.valid) {
       setAppliedCoupon(result.coupon);
       setCouponCode("");

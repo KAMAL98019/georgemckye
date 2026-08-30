@@ -5,7 +5,9 @@ import { useCart } from "@/context/CartContext";
 import { useSiteSettings } from "@/context/SiteSettingsContext";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { createWhatsAppOrder } from "@/lib/actions/orders";
-import { X, Send } from "lucide-react";
+import { validateCouponAction } from "@/actions/coupon";
+import { calculateDiscountedPrice } from "@/lib/couponValidator";
+import { X, Send, Ticket } from "lucide-react";
 
 type WhatsAppCheckoutModalProps = {
   isOpen: boolean;
@@ -30,12 +32,49 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose, appliedCoupon, 
     note: "",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [modalCoupon, setModalCoupon] = useState<any>(null);
+  const [couponError, setCouponError] = useState("");
+  const [isLoadingCoupon, setIsLoadingCoupon] = useState(false);
 
   if (!isOpen) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError("Please enter a coupon code");
+      return;
+    }
+
+    setIsLoadingCoupon(true);
+    setCouponError("");
+
+    const result = await validateCouponAction(couponCode);
+    if (result.valid) {
+      setModalCoupon(result.coupon);
+      setCouponCode("");
+    } else {
+      setCouponError(result.error || "Invalid coupon");
+      setModalCoupon(null);
+    }
+
+    setIsLoadingCoupon(false);
+  };
+
+  const removeCoupon = () => {
+    setModalCoupon(null);
+    setCouponCode("");
+    setCouponError("");
+  };
+
+  const effectiveCoupon = appliedCoupon || modalCoupon;
+  const discountData = effectiveCoupon
+    ? calculateDiscountedPrice(cartTotal, Number(effectiveCoupon.discountPercent))
+    : null;
+  const finalCartTotal = discountData ? discountData.finalPrice : cartTotal;
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,10 +114,10 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose, appliedCoupon, 
       message += `Quantity: ${item.quantity}\nPrice: ₹${item.price * item.quantity}\n\n`;
     });
 
-    if (appliedCoupon) {
-      message += `*Coupon: ${appliedCoupon.code}*\n`;
-      message += `Discount: ₹${discountAmount} (${appliedCoupon.discountPercent.toString()}% off)\n`;
-      message += `*Total after discount: ₹${finalTotal}*\n\n`;
+    if (effectiveCoupon) {
+      message += `*Coupon: ${effectiveCoupon.code}*\n`;
+      message += `Discount: ₹${discountData?.discount} (${effectiveCoupon.discountPercent.toString()}% off)\n`;
+      message += `*Total after discount: ₹${finalCartTotal}*\n\n`;
     } else {
       message += `*Estimated Total: ₹${cartTotal}*\n\n`;
     }
@@ -154,6 +193,37 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose, appliedCoupon, 
             </div>
           </form>
 
+          {!modalCoupon && !appliedCoupon && (
+            <div className="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Have a Coupon Code?</label>
+              <div className="flex gap-2">
+                <div className="flex-grow relative">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => {
+                      setCouponCode(e.target.value.toUpperCase());
+                      setCouponError("");
+                    }}
+                    onKeyDown={(e) => e.key === "Enter" && handleApplyCoupon()}
+                    placeholder="BNI-15"
+                    className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                  />
+                  <Ticket size={14} className="absolute right-3 top-2.5 text-gray-400" />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleApplyCoupon}
+                  disabled={isLoadingCoupon || !couponCode.trim()}
+                  className="px-3 py-2 bg-brand-primary text-white text-sm font-medium rounded hover:bg-brand-deep transition-colors disabled:opacity-50"
+                >
+                  Apply
+                </button>
+              </div>
+              {couponError && <p className="text-xs text-red-600 mt-1">{couponError}</p>}
+            </div>
+          )}
+
           <div className="mt-8 bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h3 className="text-sm font-bold text-gray-700 mb-2">Order Summary</h3>
             <div className="max-h-32 overflow-y-auto space-y-2 mb-4">
@@ -169,17 +239,26 @@ export default function WhatsAppCheckoutModal({ isOpen, onClose, appliedCoupon, 
                 </div>
               ))}
             </div>
-            {appliedCoupon && (
+            {effectiveCoupon && discountData && (
               <>
                 <div className="flex justify-between text-sm pt-2 pb-2 border-t border-gray-200 text-green-700 font-semibold">
-                  <span>Coupon: {appliedCoupon.code}</span>
-                  <span>-₹{discountAmount}</span>
+                  <span>Coupon: {effectiveCoupon.code}</span>
+                  <span>-₹{discountData.discount}</span>
                 </div>
               </>
             )}
+            {effectiveCoupon && modalCoupon && (
+              <button
+                type="button"
+                onClick={removeCoupon}
+                className="text-xs text-gray-500 hover:text-red-600 mt-2 transition-colors"
+              >
+                Remove coupon
+              </button>
+            )}
             <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200">
               <span>Estimated Total:</span>
-              <span>₹{appliedCoupon ? finalTotal : cartTotal}</span>
+              <span>₹{finalCartTotal}</span>
             </div>
           </div>
 
