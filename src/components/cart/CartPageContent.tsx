@@ -77,9 +77,14 @@ export default function CartPageContent() {
                   return (
                   <div key={lineKey} className="py-6 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                     <div className="col-span-1 md:col-span-6 flex gap-4">
-                      {/* Image placeholder since we might not have it in cart context */}
-                      <div className="w-20 h-24 bg-brand-cream/30 rounded flex-shrink-0 flex items-center justify-center text-xs text-brand-muted">
-                        Img
+                      <div className="w-20 h-24 bg-brand-cream/30 rounded flex-shrink-0 overflow-hidden">
+                        {item.image ? (
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-xs text-brand-muted">
+                            Img
+                          </div>
+                        )}
                       </div>
                       <div>
                         <h3 className="text-lg font-bold text-brand-deep mb-1">{item.name}</h3>
