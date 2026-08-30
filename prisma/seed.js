@@ -3,12 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
-const CATEGORIES = [
-  { name: "Towels", slug: "towels", description: "Soft, absorbent essentials designed for everyday comfort.", sortOrder: 1 },
-  { name: "T-Shirts", slug: "t-shirts", description: "Natural comfort for everyday wear.", sortOrder: 2 },
-  { name: "Hankies", slug: "hankies", description: "Simple, soft and practical everyday essentials.", sortOrder: 3 },
-];
-
 const TESTIMONIALS = [
   {
     name: "Ananya Sharma",
@@ -42,17 +36,7 @@ const TESTIMONIALS = [
 // upload flow (public/uploads) and the admin can enter real pricing.
 
 async function main() {
-  // 1. Categories
-  for (const category of CATEGORIES) {
-    await prisma.category.upsert({
-      where: { slug: category.slug },
-      create: category,
-      update: { name: category.name, description: category.description, sortOrder: category.sortOrder },
-    });
-  }
-  console.log(`Seeded ${CATEGORIES.length} categories.`);
-
-  // 2. Admin user
+  // 1. Admin user
   const adminEmail = process.env.ADMIN_EMAIL;
   const adminPassword = process.env.ADMIN_PASSWORD;
   if (adminEmail && adminPassword) {
@@ -75,7 +59,7 @@ async function main() {
     console.warn("ADMIN_EMAIL / ADMIN_PASSWORD not set — skipping admin user seed.");
   }
 
-  // 3. Testimonials (only seed if none exist, so re-running doesn't duplicate)
+  // 2. Testimonials (only seed if none exist, so re-running doesn't duplicate)
   const testimonialCount = await prisma.testimonial.count();
   if (testimonialCount === 0) {
     await prisma.testimonial.createMany({ data: TESTIMONIALS });
