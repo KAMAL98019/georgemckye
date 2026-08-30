@@ -9,6 +9,7 @@ import {
   Users,
   Star,
   Settings,
+  Ticket,
   LogOut,
 } from "lucide-react";
 import { cookies } from "next/headers";
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: Tags },
+  { href: "/admin/coupons", label: "Coupons", icon: Ticket },
   { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { href: "/admin/enquiries", label: "Enquiries", icon: MessageSquare },
   { href: "/admin/customers", label: "Customers", icon: Users },

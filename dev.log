@@ -7,9 +7,38 @@
   - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 2.1s
+ ✓ Ready in 2.3s
  ○ Compiling /cart ...
- ✓ Compiled /cart in 2s (779 modules)
- GET /cart 200 in 2369ms
- ✓ Compiled in 384ms (317 modules)
- ✓ Compiled in 232ms (317 modules)
+ ✓ Compiled /cart in 1970ms (779 modules)
+ ✓ Compiled in 393ms (317 modules)
+ GET /cart 200 in 2416ms
+ ✓ Compiled in 209ms (303 modules)
+ ○ Compiling / ...
+ ✓ Compiled /shop in 2.6s (1635 modules)
+ GET / 200 in 2869ms
+ GET /shop?category=towels 200 in 1533ms
+ ✓ Compiled /src/middleware in 313ms (129 modules)
+ ✓ Compiled /admin in 263ms (1644 modules)
+ GET /admin 307 in 437ms
+ ○ Compiling /admin/dashboard ...
+ ✓ Compiled /admin/dashboard in 644ms (1823 modules)
+ GET /admin/dashboard 200 in 924ms
+ ○ Compiling /admin/products ...
+ ✓ Compiled /admin/products in 795ms (1858 modules)
+ ✓ Compiled /admin/products/[id]/edit in 463ms (1874 modules)
+ ✓ Compiled /admin/orders in 285ms (1878 modules)
+ ✓ Compiled /admin/customers in 424ms (1428 modules)
+ GET /admin/products 200 in 199ms
+ ✓ Compiled /admin/categories in 485ms (1446 modules)
+ ✓ Compiled /admin/enquiries in 441ms (1453 modules)
+ ○ Compiling /admin/products/new ...
+ ✓ Compiled /admin/products/new in 571ms (1319 modules)
+ GET /admin/products 200 in 151ms
+ GET /admin/products 200 in 95ms
+ GET /admin/products 200 in 98ms
+ GET /admin/products 200 in 94ms
+ GET /admin/products 200 in 101ms
+ ✓ Compiled in 545ms (1320 modules)
+ ✓ Compiled /favicon.ico in 103ms (596 modules)
+ GET /favicon.ico 200 in 161ms
+ ✓ Compiled in 282ms (1353 modules)
