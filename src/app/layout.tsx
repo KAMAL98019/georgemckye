@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { CartProvider } from "@/context/CartContext";
+import { CartSidebarProvider } from "@/context/CartSidebarContext";
 import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
+import CartSidebar from "@/components/cart/CartSidebar";
 import { getSiteSettings } from "@/lib/settings";
 import { STORE_PHONE, LOGO_URL } from "@/lib/constants";
 
@@ -83,16 +85,19 @@ export default async function RootLayout({
         />
         <SiteSettingsProvider settings={settings}>
           <CartProvider>
-            {children}
-            <Toaster
-              position="bottom-center"
-              richColors
-              toastOptions={{
-                style: {
-                  fontFamily: "var(--font-sans)",
-                },
-              }}
-            />
+            <CartSidebarProvider>
+              {children}
+              <CartSidebar />
+              <Toaster
+                position="bottom-center"
+                richColors
+                toastOptions={{
+                  style: {
+                    fontFamily: "var(--font-sans)",
+                  },
+                }}
+              />
+            </CartSidebarProvider>
           </CartProvider>
         </SiteSettingsProvider>
       </body>

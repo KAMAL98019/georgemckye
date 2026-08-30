@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCart } from "@/context/CartContext";
+import { useCartSidebar } from "@/context/CartSidebarContext";
 import { ShoppingBag, Minus, Plus } from "lucide-react";
 
 const MAX_QUANTITY = 20;
@@ -19,6 +20,7 @@ export default function AddToCartButtons({
   showQuantity?: boolean;
 }) {
   const { addToCart } = useCart();
+  const { openCart } = useCartSidebar();
   const [quantity, setQuantity] = useState(1);
   // Auto-select when there's only one option (e.g. "Free Size") — nothing to actually choose,
   // so it shouldn't block the customer with a required-selection prompt.
@@ -56,6 +58,7 @@ export default function AddToCartButtons({
     if (!validateSelection()) return;
     addToCart(buildCartItem());
     toast.success(`${product.name} added to cart`);
+    openCart();
   };
 
   return (
