@@ -16,7 +16,6 @@ import { cookies } from "next/headers";
 import { verifyAdminSession, ADMIN_SESSION_COOKIE } from "@/lib/auth";
 import { adminLogout } from "@/lib/actions/auth";
 import { LOGO_URL } from "@/lib/constants";
-import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -40,9 +39,9 @@ export default async function AdminLayout({
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden flex-col md:flex-row">
-      {/* Desktop Sidebar */}
+      {/* Sidebar */}
       <aside className="hidden md:flex md:w-64 bg-brand-deep text-white flex-col shrink-0">
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
             <Image
               src={LOGO_URL}
@@ -51,19 +50,19 @@ export default async function AdminLayout({
               height={40}
               className="rounded-full object-cover border border-brand-cream/20 shrink-0"
             />
-            <span className="text-lg font-bold tracking-tight text-brand-cream leading-tight">
+            <span className="text-lg font-bold tracking-tight text-brand-cream leading-tight hidden md:block">
               GEORGE MCKYE
               <span className="block text-xs font-normal text-brand-natural">Admin Panel</span>
             </span>
           </Link>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1 mt-4 overflow-y-auto">
+        <nav className="flex-1 px-3 md:px-4 space-y-1 mt-4 overflow-y-auto">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 px-3 py-2 rounded text-brand-cream/70 hover:text-white hover:bg-brand-primary transition-colors"
+              className="flex items-center gap-3 px-3 py-2 rounded text-sm md:text-base text-brand-cream/70 hover:text-white hover:bg-brand-primary transition-colors"
             >
               <item.icon size={20} />
               <span>{item.label}</span>
@@ -71,11 +70,11 @@ export default async function AdminLayout({
           ))}
         </nav>
 
-        <div className="p-4 border-t border-brand-primary/50 shrink-0">
+        <div className="p-3 md:p-4 border-t border-brand-primary/50 shrink-0">
           <form action={adminLogout}>
             <button
               type="submit"
-              className="flex items-center gap-3 px-3 py-2 w-full rounded text-brand-cream/70 hover:text-white hover:bg-red-500/80 transition-colors"
+              className="flex items-center gap-3 px-3 py-2 w-full rounded text-sm md:text-base text-brand-cream/70 hover:text-white hover:bg-red-500/80 transition-colors"
             >
               <LogOut size={20} />
               <span>Logout</span>
@@ -84,15 +83,14 @@ export default async function AdminLayout({
         </div>
       </aside>
 
-      {/* Mobile Sidebar Drawer */}
-      <AdminSidebar navItems={NAV_ITEMS} />
-
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
         <header className="h-14 md:h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 shadow-sm shrink-0 sticky top-0 z-10">
           <h2 className="text-base md:text-lg font-semibold text-gray-800 truncate">Admin Panel</h2>
           <div className="flex items-center gap-2 md:gap-4">
-            <span className="text-xs md:text-sm font-medium text-gray-600 hidden sm:inline truncate">{session?.name || session?.email || "Admin"}</span>
+            <span className="text-xs md:text-sm font-medium text-gray-600 hidden sm:inline truncate">
+              {session?.name || session?.email || "Admin"}
+            </span>
             <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold text-sm shrink-0">
               {(session?.name || session?.email || "A").charAt(0).toUpperCase()}
             </div>
