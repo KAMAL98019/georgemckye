@@ -26,23 +26,31 @@ export default async function AdminEnquiriesPage() {
       ) : (
         <div className="space-y-4">
           {enquiries.map((enquiry) => (
-            <div key={enquiry.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <div className="flex items-start justify-between flex-wrap gap-4">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-3 mb-1 flex-wrap">
-                    <h3 className="font-bold text-gray-900">{enquiry.name}</h3>
-                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_STYLES[enquiry.status]}`}>
+            <div key={enquiry.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div className="min-w-0 sm:flex-1">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <h3 className="font-bold text-gray-900 break-words">{enquiry.name}</h3>
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium shrink-0 ${STATUS_STYLES[enquiry.status]}`}>
                       {enquiry.status}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
-                    <span className="flex items-center gap-1"><Phone size={14} /> {enquiry.phone}</span>
-                    {enquiry.email && <span className="flex items-center gap-1 min-w-0 break-all"><Mail size={14} className="shrink-0" /> {enquiry.email}</span>}
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-1 sm:gap-x-4 sm:items-center text-sm text-gray-500 mb-3">
+                    <span className="flex items-center gap-1 min-w-0">
+                      <Phone size={14} className="shrink-0" />
+                      <span className="truncate">{enquiry.phone}</span>
+                    </span>
+                    {enquiry.email && (
+                      <span className="flex items-center gap-1 min-w-0">
+                        <Mail size={14} className="shrink-0" />
+                        <span className="break-words">{enquiry.email}</span>
+                      </span>
+                    )}
                     <span>{enquiry.createdAt.toLocaleString("en-IN")}</span>
                   </div>
                   <p className="text-sm text-gray-700 whitespace-pre-wrap break-words">{enquiry.message}</p>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 sm:shrink-0">
                   {enquiry.status !== "READ" && (
                     <form action={markEnquiryStatus.bind(null, enquiry.id, "READ")}>
                       <button type="submit" className="text-xs font-medium px-3 py-1.5 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors">
