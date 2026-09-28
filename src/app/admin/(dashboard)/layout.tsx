@@ -16,6 +16,7 @@ import { cookies } from "next/headers";
 import { verifyAdminSession, ADMIN_SESSION_COOKIE } from "@/lib/auth";
 import { adminLogout } from "@/lib/actions/auth";
 import { LOGO_URL } from "@/lib/constants";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -39,7 +40,10 @@ export default async function AdminLayout({
 
   return (
     <div className="flex h-screen bg-gray-100 overflow-hidden flex-col md:flex-row">
-      {/* Sidebar */}
+      {/* Mobile nav (hamburger + drawer) */}
+      <AdminSidebar />
+
+      {/* Desktop Sidebar */}
       <aside className="hidden md:flex md:w-64 bg-brand-deep text-white flex-col shrink-0">
         <div className="p-4 md:p-6">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
@@ -85,10 +89,10 @@ export default async function AdminLayout({
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden w-full">
-        <header className="h-14 md:h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 shadow-sm shrink-0 sticky top-0 z-10">
-          <h2 className="text-base md:text-lg font-semibold text-gray-800 truncate">Admin Panel</h2>
-          <div className="flex items-center gap-2 md:gap-4">
-            <span className="text-xs md:text-sm font-medium text-gray-600 hidden sm:inline truncate">
+        <header className="hidden md:flex h-16 bg-white border-b border-gray-200 items-center justify-between px-8 shadow-sm shrink-0 sticky top-0 z-10">
+          <h2 className="text-lg font-semibold text-gray-800 truncate">Admin Panel</h2>
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-gray-600 truncate">
               {session?.name || session?.email || "Admin"}
             </span>
             <div className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold text-sm shrink-0">
