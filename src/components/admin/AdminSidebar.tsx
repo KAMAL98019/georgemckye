@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Menu, X, LogOut } from "lucide-react";
 import { adminLogout } from "@/lib/actions/auth";
 
@@ -11,8 +12,12 @@ export default function AdminSidebar({
   navItems: Array<{ href: string; label: string; icon: any }>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const closeSidebar = () => setIsOpen(false);
+  const handleNavClick = (href: string) => {
+    setIsOpen(false);
+    router.push(href);
+  };
 
   return (
     <>
@@ -31,7 +36,7 @@ export default function AdminSidebar({
           {/* Backdrop */}
           <div
             className="md:hidden fixed inset-0 bg-black/50 z-40"
-            onClick={closeSidebar}
+            onClick={() => setIsOpen(false)}
           />
 
           {/* Drawer */}
@@ -39,7 +44,7 @@ export default function AdminSidebar({
             <div className="p-6 flex items-center justify-between">
               <span className="text-lg font-bold text-brand-cream">Menu</span>
               <button
-                onClick={closeSidebar}
+                onClick={() => setIsOpen(false)}
                 className="p-1 hover:bg-brand-primary rounded"
               >
                 <X size={20} />
@@ -48,15 +53,14 @@ export default function AdminSidebar({
 
             <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.href}
-                  href={item.href}
-                  onClick={closeSidebar}
-                  className="flex items-center gap-3 px-3 py-2 rounded text-brand-cream/70 hover:text-white hover:bg-brand-primary transition-colors"
+                  onClick={() => handleNavClick(item.href)}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded text-brand-cream/70 hover:text-white hover:bg-brand-primary transition-colors text-left"
                 >
                   <item.icon size={20} />
                   <span>{item.label}</span>
-                </Link>
+                </button>
               ))}
             </nav>
 
