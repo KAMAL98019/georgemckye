@@ -50,8 +50,8 @@ export default async function AdminCustomersPage() {
         Derived from WhatsApp order requests. George McKye does not require customer accounts to place a request.
       </p>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <table className="w-full text-left text-sm text-gray-600">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+        <table className="w-full text-left text-sm text-gray-600 min-w-[640px]">
           <thead className="bg-gray-50 border-b border-gray-200 text-gray-700">
             <tr>
               <th className="px-6 py-3 font-semibold">Name</th>

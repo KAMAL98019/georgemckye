@@ -109,7 +109,8 @@ export default async function AdminDashboardPage() {
           <h2 className="font-bold text-gray-900">Recent Orders</h2>
           <Link href="/admin/orders" className="text-sm font-medium text-brand-primary hover:underline">View all</Link>
         </div>
-        <table className="w-full text-left text-sm text-gray-600">
+        <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm text-gray-600 min-w-[640px]">
           <thead className="bg-gray-50 border-b border-gray-200 text-gray-700">
             <tr>
               <th className="px-6 py-3 font-semibold">Order #</th>
@@ -147,6 +148,7 @@ export default async function AdminDashboardPage() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

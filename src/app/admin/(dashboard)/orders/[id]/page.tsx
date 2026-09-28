@@ -34,7 +34,8 @@ export default async function AdminOrderDetailPage({ params }: { params: { id: s
         <div className="md:col-span-2 space-y-6">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="font-bold text-gray-900 mb-4">Items</h2>
-            <table className="w-full text-left text-sm text-gray-600">
+            <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm text-gray-600 min-w-[480px]">
               <thead className="border-b border-gray-200 text-gray-700">
                 <tr>
                   <th className="py-2 font-semibold">Product</th>
@@ -54,6 +55,7 @@ export default async function AdminOrderDetailPage({ params }: { params: { id: s
                 ))}
               </tbody>
             </table>
+            </div>
             <div className="border-t border-gray-200 mt-4 pt-4 space-y-1 text-sm text-right">
               <p className="text-gray-600">Subtotal: ₹{order.subtotal.toString()}</p>
               <p className="text-gray-600">Shipping: ₹{order.shipping.toString()}</p>
